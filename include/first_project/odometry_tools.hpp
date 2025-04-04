@@ -8,6 +8,7 @@
 */
 #include "nav_msgs/Odometry.h" //definisce il tipo di messaggio che il nodo invia
 #include <cmath> //per le funzioni matematiche
+#include <tf2/LinearMath/Quaternion.h>
 
 namespace odometer_tools{
     //Constants
@@ -15,6 +16,13 @@ namespace odometer_tools{
     constexpr float FRONT_TO_REAR_AXIS = 1.765;//m
     constexpr int STEERING_FACTOR = 32;
     
+    struct positionState{
+        double x;
+        double y;
+        double theta;
+        ros::Time time;
+    };
+
     //Conversions
     double speedConvert(double speed);
     double steerConvert(double steer);
@@ -24,6 +32,9 @@ namespace odometer_tools{
     double getAngularSpeed(double steering_angle, double speed);
 
     //Euler integration
-    void eulerIntegration(double& x, double& y, double& theta, double speed, double angular_speed, double dt);
+    positionState eulerIntegration(positionState state, double speed, double angular_speed, ros::Time current_time);
+
+    //Quaternion conversion
+    geometry_msgs::Quaternion quaternionConversion(positionState state);
 
 }

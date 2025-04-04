@@ -25,10 +25,33 @@ namespace odometer_tools{
 
 
     //Euler integration
-    void eulerIntegration(double& x, double& y, double& theta, double speed, double angular_speed, double dt){
-        x += speed * cos(theta) * dt;
-        y += speed * sin(theta) * dt;
-        theta += angular_speed * dt;
+    positionState eulerIntegration(positionState state, double speed, double angular_speed, ros::Time current_time){
+        double dt = 0.0;
+        if (!state.time.isZero()) {
+            dt = (current_time - state.time).toSec();
+        }
+        state.time = current_time;
+
+        state.x += speed * cos(state.theta) * dt;
+        state.y += speed * sin(state.theta) * dt;
+        state.theta += angular_speed * dt;
+
+        return state;
+    }
+
+    //Quaternion conversion
+    geometry_msgs::Quaternion quaternionConversion(positionState state){
+        geometry_msgs::Quaternion orientation;
+        tf2::Quaternion q;
+
+        q.setRPY(0, 0, state.theta);
+
+        orientation.x = q.x();
+        orientation.y = q.y();
+        orientation.z = q.z();
+        orientation.w = q.w();
+
+        return orientation;
     }
 
 }
