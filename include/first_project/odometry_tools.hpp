@@ -31,8 +31,14 @@ namespace odometer_tools{
     //Ackermann steering bicyle approximation
     double getAngularSpeed(double steering_angle, double speed);
 
+    //Time sample calculation
+    double timeSample(positionState state, ros::Time current_time);
+
     //Euler integration
     positionState eulerIntegration(positionState state, double speed, double angular_speed, ros::Time current_time);
+
+    //Runge-Kutta integration
+    positionState rungeKuttaIntegration(positionState state, double speed, double angular_speed, ros::Time current_time);
 
     //Quaternion conversion
     geometry_msgs::Quaternion quaternionConversion(positionState state);

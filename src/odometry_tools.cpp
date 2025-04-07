@@ -23,17 +23,32 @@ namespace odometer_tools{
         return angular_speed;
     }
 
-
-    //Euler integration
-    positionState eulerIntegration(positionState state, double speed, double angular_speed, ros::Time current_time){
+    //Time sample calculation
+    double timeSample(positionState state, ros::Time current_time){
         double dt = 0.0;
         if (!state.time.isZero()) {
             dt = (current_time - state.time).toSec();
         }
-        state.time = current_time;
+        return dt;
+    }
+
+    //Euler integration
+    positionState eulerIntegration(positionState state, double speed, double angular_speed, ros::Time current_time){
+        double dt = timeSample(state, current_time);
 
         state.x += speed * cos(state.theta) * dt;
         state.y += speed * sin(state.theta) * dt;
+        state.theta += angular_speed * dt;
+
+        return state;
+    }
+
+    //Runge-Kutta integration
+    positionState rungeKuttaIntegration(positionState state, double speed, double angular_speed, ros::Time current_time){
+        double dt = timeSample(state, current_time);
+
+        state.x += speed * cos(state.theta + ((angular_speed*dt)/2) ) * dt;
+        state.y += speed * sin(state.theta + ((angular_speed*dt)/2) ) * dt;
         state.theta += angular_speed * dt;
 
         return state;

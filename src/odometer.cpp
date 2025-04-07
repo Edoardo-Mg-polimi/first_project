@@ -5,6 +5,7 @@
     x = steer at the steering wheel [deg]
 */
 #include "nav_msgs/Odometry.h" //definisce il tipo di messaggio che il nodo invia
+#include <tf/transform_broadcaster.h>
 
 
 #include "first_project/odometry_tools.hpp" //include il file di intestazione che contiene le dichiarazioni delle funzioni
@@ -30,7 +31,7 @@ void speedSteerCallback(const geometry_msgs::PointStamped::ConstPtr& msg, ros::P
 	double angular_speed = odometer_tools::getAngularSpeed(steering_angle, speed);// velocità angolare in rad/s
 
 	//4 - Integrazione nel tempo - POSITION
-	state = eulerIntegration(state, speed, angular_speed, current_time);// integrazione nel tempo
+	state = rungeKuttaIntegration(state, speed, angular_speed, current_time);// integrazione nel tempo
 
 	//5 - conversione in quaternione - ORIENTATION
 	geometry_msgs::Quaternion orientation = odometer_tools::quaternionConversion(state);// conversione in quaternione
@@ -52,10 +53,25 @@ void speedSteerCallback(const geometry_msgs::PointStamped::ConstPtr& msg, ros::P
 	odom_msg.twist.twist.angular.x = 0.0;
 	odom_msg.twist.twist.angular.y = 0.0;
 	odom_msg.twist.twist.angular.z = angular_speed;
-	
 
-	//7 - pubblicazione del messaggio
+	//7 - pubblicazione del messaggio odometry
 	odom_pub.publish(odom_msg);
+
+	//8 - pubblicazione tf
+	static tf::TransformBroadcaster odom_broadcaster;
+	tf::Transform odom_trans;
+	odom_trans.setOrigin(tf::Vector3(state.x, state.y, 0.0));
+	tf::Quaternion quat;
+	tf::quaternionMsgToTF(orientation, quat);
+	odom_trans.setRotation(quat);
+
+	odom_broadcaster.sendTransform(tf::StampedTransform(
+		odom_trans,
+		current_time,
+		"odom",
+		"base_link"
+	));
+	
 }
 
 
