@@ -32,7 +32,7 @@ namespace odometer_tools{
     double getAngularSpeed(double steering_angle, double speed);
 
     //Time sample calculation
-    double timeSample(positionState state, ros::Time current_time);
+    double timeSample(positionState& state, ros::Time current_time);
 
     //Euler integration
     positionState eulerIntegration(positionState state, double speed, double angular_speed, ros::Time current_time);

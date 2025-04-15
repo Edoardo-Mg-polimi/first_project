@@ -24,11 +24,14 @@ namespace odometer_tools{
     }
 
     //Time sample calculation
-    double timeSample(positionState state, ros::Time current_time){
+    double timeSample(positionState& state, ros::Time current_time){
         double dt = 0.0;
         if (!state.time.isZero()) {
             dt = (current_time - state.time).toSec();
         }
+
+        state.time = current_time;
+
         return dt;
     }
 
