@@ -2,11 +2,22 @@
 #include "sensor_msg/NavSatFix.h" //messaggio che il nodo riceve
 #include "nav_msgs/Odometry.h" //definisce il tipo di messaggio che il nodo invia
 
+#include "gps_odometer_tools.hpp"
+
 
 void speedSteerCallback(const geometry_msgs::PointStamped::ConstPtr& msg, ros::Publisher& gps_odom_pub){
     // 1 - raccolta dati 
+	gps_odometer_tools::positionGPS gps{ msg->point.x, msg->point.y, msg->point.z };
+	ROS_INFO_STREAM("Messaggio GPS ricevuto");
 
-	// 2 - Conversione posizione GPS (latitudine, longitudine) -> cartesiano ECEF
+	// 2 - Conversione da posizione GPS (latitudine, longitudine, altitudine) -> cartesiano ECEF
+	gps_odometer_tools::positionECEF ecef = gps_odometer_tools::gpsToECEF(gps);
+
+	// 3 - Conversione da cartesiano ECEF -> Cartesiano ENU
+
+	
+
+
 }
 
 
