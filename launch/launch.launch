@@ -1,0 +1,7 @@
+<launch>
+  <node name="gps_odometer" pkg="first_project" type="gps_odometer" output="screen">
+    <param name="reference_latitude" type="double" value="45.600" />
+    <param name="reference_longitude" type="double" value="10.500" />
+    <param name="reference_altitude" type="double" value="65.0" />
+  </node>
+</launch>
