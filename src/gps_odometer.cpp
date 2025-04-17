@@ -14,6 +14,12 @@ gps_odometer_tools::position old_enu = {0, 0, 0}; // inizializzazione della posi
 void speedSteerCallback(const sensor_msgs::NavSatFix::ConstPtr& msg, 
 						ros::Publisher& gps_odom_pub, 
 						const gps_odometer_tools::positionGPS& reference_position){
+	// 0 - Controllo se il messaggio è valido
+	if (msg->latitude == 0.0 && msg->longitude == 0.0 && msg->altitude == 0.0) {
+		ROS_WARN_STREAM("Messaggio GPS ignorato: coordinate nulle (0,0,0)");
+		return;
+	}
+	
     
 	// 1 - raccolta dati 
 	gps_odometer_tools::positionGPS gps{ odometer_tools::degToRad(msg->latitude),
