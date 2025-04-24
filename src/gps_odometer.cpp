@@ -77,7 +77,8 @@ void speedSteerCallback(const sensor_msgs::NavSatFix::ConstPtr& msg,
 	// 8 - pubblicazione del messaggio odometry
 	gps_odom_pub.publish(odom_msg);
 
-	// 9 - Pubblicazione della tf
+	// 9 - pubblicazione TF gps_odom → base_link
+	static tf::TransformBroadcaster tf_broadcaster;
 	tf::Transform transform;
 	transform.setOrigin(tf::Vector3(enu.x, enu.y, enu.z));
 

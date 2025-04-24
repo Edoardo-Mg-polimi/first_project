@@ -107,7 +107,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES first_project
-  CATKIN_DEPENDS roscpp rospy std_msgs geometry_msgs tf
+  CATKIN_DEPENDS roscpp rospy std_msgs geometry_msgs tf message_filters
 )
 
 ###########
@@ -144,6 +144,9 @@ target_link_libraries(odometer odometry_tools ${catkin_LIBRARIES})
 
 add_executable(gps_odometer src/gps_odometer.cpp)
 target_link_libraries(gps_odometer gps_odometer_tools odometry_tools ${catkin_LIBRARIES})
+
+add_executable(sector_times src/sector_times.cpp)
+target_link_libraries(sector_times gps_odometer_tools odometry_tools ${catkin_LIBRARIES})
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
