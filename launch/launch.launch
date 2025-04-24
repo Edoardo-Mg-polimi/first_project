@@ -1,12 +1,20 @@
 <launch>
 
+  <!-- Avvia il nodo 1 -->
+  <node name="odometer" pkg="first_project" type="odometer" output="screen" />
 
-  <!-- Avvia il tuo nodo -->
+  <!-- Avvia il nodo 2 -->
   <node name="gps_odometer" pkg="first_project" type="gps_odometer" output="screen">
     <param name="reference_latitude" type="double" value="45.618932386592405" />
     <param name="reference_longitude" type="double" value="9.281178887031235" />
     <param name="reference_altitude" type="double" value="229.04906147731415" />
   </node>
+
+  <!-- Avvia il nodo 3 -->
+  <node name="sector_times" pkg="first_project" type="sector_times" output="screen" />
+
+  <!-- Launch RViz with custom configuration -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find first_project)/rviz/visualization.rviz" />
 
   <!-- Avvia la bag -->
   <node pkg="rosbag" type="play" name="bag_player" output="screen"

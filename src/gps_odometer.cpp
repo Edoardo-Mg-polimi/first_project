@@ -7,6 +7,7 @@
 
 #include <cmath> //per le funzioni matematiche
 #include <Eigen/Geometry> // Per Quaterniond e AngleAxisd
+#include <tf/transform_broadcaster.h>
 
 gps_odometer_tools::position old_enu = {0, 0, 0}; // inizializzazione della posizione ENU
 
@@ -73,8 +74,23 @@ void speedSteerCallback(const sensor_msgs::NavSatFix::ConstPtr& msg,
 	odom_msg.twist.twist.angular = angular_velocity;
 
 
-	//7 - pubblicazione del messaggio odometry
+	// 8 - pubblicazione del messaggio odometry
 	gps_odom_pub.publish(odom_msg);
+
+	// 9 - Pubblicazione della tf
+	tf::Transform transform;
+	transform.setOrigin(tf::Vector3(enu.x, enu.y, enu.z));
+
+	tf::Quaternion tf_quat;
+	tf::quaternionMsgToTF(quaternion, tf_quat);
+	transform.setRotation(tf_quat);
+
+	tf_broadcaster.sendTransform(tf::StampedTransform(
+		transform,
+		gps.time,              // timestamp
+		"gps_odom",            // frame padre
+		"base_link"            // frame figlio
+	));
 }
 
 
