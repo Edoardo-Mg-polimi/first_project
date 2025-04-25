@@ -32,14 +32,19 @@ void callback(const geometry_msgs::PointStampedConstPtr& msg1,
                                          msg2->longitude,
                                          msg2->altitude,
                                          msg2->header.stamp};
+    
+    ros::Time current_time = msg1->header.stamp;
+    double current_speed = msg1->point.y; // velocità in km/h
 
     // 2 - Calcolo del settore
     sector = sector_tools::getSector(gps, reference_position, sector);
     ROS_INFO_STREAM("Settore: " << sector);
 
     // 3 - Calcolo del tempo di percorrenza del settore
+    float sector_time = 0;
 
     // 4 - Velocità media del setore
+    float mean_speed = 0;
 
     // 5 - Creazione del messaggio
 
