@@ -12,9 +12,13 @@
 #include <message_filters/sync_policies/approximate_time.h>
 
 #include "first_project/gps_odometer_tools.hpp"
+#include "first_project/sector_tools.hpp" 
 
+int sector = 1; // variabile globale per il settore corrente
 
-void callback(const geometry_msgs::PointStampedConstPtr& msg1, const sensor_msgs::NavSatFixConstPtr& msg2){
+void callback(const geometry_msgs::PointStampedConstPtr& msg1, 
+                const sensor_msgs::NavSatFixConstPtr& msg2,
+                const gps_odometer_tools::positionGPS& reference_position){
     ROS_INFO ("Received two messages");
 
     // 0 - Controllo se il messaggio è valido
@@ -24,12 +28,14 @@ void callback(const geometry_msgs::PointStampedConstPtr& msg1, const sensor_msgs
     }
 
     // 1 - raccolta dati
-    gps_odometer_tools::positionGPS gps{ odometer_tools::degToRad(msg2->latitude),
-                                         odometer_tools::degToRad(msg2->longitude),
+    gps_odometer_tools::positionGPS gps{ msg2->latitude,
+                                         msg2->longitude,
                                          msg2->altitude,
                                          msg2->header.stamp};
 
     // 2 - Calcolo del settore
+    sector = sector_tools::getSector(gps, reference_position, sector);
+    ROS_INFO_STREAM("Settore: " << sector);
 
     // 3 - Calcolo del tempo di percorrenza del settore
 
@@ -70,7 +76,7 @@ int main(int argc, char **argv){
 
     typedef message_filters::sync_policies::ApproximateTime<geometry_msgs::PointStamped, sensor_msgs::NavSatFix> MySyncPolicy;
     message_filters::Synchronizer<MySyncPolicy> sync(MySyncPolicy(10), sub1, sub2);
-    sync.registerCallback(boost::bind(&callback, _1, _2));
+    sync.registerCallback(boost::bind(&callback, _1, _2, reference_position));
 
   	ros::spin();
 

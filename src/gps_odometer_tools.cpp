@@ -3,6 +3,10 @@
 namespace gps_odometer_tools{
 
     position gpsToEcef(positionGPS gps){
+        //Convertire la latitudine e longitudine in radianti
+        gps.latitude = odometer_tools::degToRad(gps.latitude);
+        gps.longitude = odometer_tools::degToRad(gps.longitude);
+
         double eccentricity = sqrt(1 - (POLAR_RADIUS * POLAR_RADIUS) / (EQUATORIAL_RADIUS * EQUATORIAL_RADIUS));
         double N = EQUATORIAL_RADIUS / sqrt(1 - (eccentricity * eccentricity) * sin(gps.latitude) * sin(gps.latitude));
 

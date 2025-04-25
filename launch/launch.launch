@@ -12,7 +12,7 @@
   <node name="gps_odometer" pkg="first_project" type="gps_odometer" output="screen" />
 
   <!-- Avvia il nodo 3 -->
-  
+  <node name="sector_times" pkg="first_project" type="sector_times" output="screen" />
 
   <!-- Launch RViz with custom configuration -->
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find first_project)/rviz/visualization.rviz" />

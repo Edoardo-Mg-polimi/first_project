@@ -23,8 +23,8 @@ void speedSteerCallback(const sensor_msgs::NavSatFix::ConstPtr& msg,
 	
     
 	// 1 - raccolta dati 
-	gps_odometer_tools::positionGPS gps{ odometer_tools::degToRad(msg->latitude),
-										 odometer_tools::degToRad(msg->longitude),
+	gps_odometer_tools::positionGPS gps{ msg->latitude,
+										 msg->longitude,
 										 msg->altitude,
 										 msg->header.stamp};
 	ROS_INFO_STREAM("Messaggio GPS ricevuto");

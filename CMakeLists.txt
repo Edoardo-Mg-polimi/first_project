@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   geometry_msgs
   tf
+  message_filters
 )
 
 ## System dependencies are found with CMake's conventions
@@ -131,6 +132,9 @@ add_library(gps_odometer_tools
   src/gps_odometer_tools.cpp
 )
 
+add_library(sector_tools
+  src/sector_tools.cpp
+)
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
@@ -146,7 +150,7 @@ add_executable(gps_odometer src/gps_odometer.cpp)
 target_link_libraries(gps_odometer gps_odometer_tools odometry_tools ${catkin_LIBRARIES})
 
 add_executable(sector_times src/sector_times.cpp)
-target_link_libraries(sector_times gps_odometer_tools odometry_tools ${catkin_LIBRARIES})
+target_link_libraries(sector_times sector_tools gps_odometer_tools odometry_tools ${catkin_LIBRARIES})
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
