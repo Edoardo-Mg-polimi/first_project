@@ -33,6 +33,8 @@ namespace sector_tools{
 
     border gpsBorderToEnu(border gps_boundary, gps_odometer_tools::positionGPS reference_gps);
 
+    bool sectorChanged(int new_sector, int& last_sector);
+
 
 
 }

@@ -102,4 +102,15 @@ namespace sector_tools{
         
     }
 
+
+    bool sectorChanged(int new_sector, int& last_sector){
+        if (last_sector != new_sector){
+            ROS_INFO_STREAM("Settore cambiato: " << last_sector << " -> " << new_sector);
+            last_sector = new_sector;
+            return true;
+        }
+        
+        return false;
+    }
+
 }
