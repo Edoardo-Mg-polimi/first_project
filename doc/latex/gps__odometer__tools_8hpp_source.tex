@@ -1,0 +1,47 @@
+\doxysection{gps\+\_\+odometer\+\_\+tools.\+hpp}
+\hypertarget{gps__odometer__tools_8hpp_source}{}\label{gps__odometer__tools_8hpp_source}\index{include/first\_project/gps\_odometer\_tools.hpp@{include/first\_project/gps\_odometer\_tools.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <Eigen/Geometry>}\ \textcolor{comment}{//\ Per\ Quaterniond\ e\ AngleAxisd}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}ros/ros.h"{}}\ \textcolor{comment}{//\ Include\ le\ API\ di\ ROS}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}sensor\_msgs/NavSatFix.h"{}}\ \textcolor{comment}{//\ Messaggio\ che\ il\ nodo\ riceve}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}nav\_msgs/Odometry.h"{}}\ \textcolor{comment}{//\ Definisce\ il\ tipo\ di\ messaggio\ che\ il\ nodo\ invia}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}first\_project/odometry\_tools.hpp"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }gps\_odometer\_tools\ \{}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ EQUATORIAL\_RADIUS\ =\ 6378137.0;\ \textcolor{comment}{//\ in\ meters}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ POLAR\_RADIUS\ =\ 6356752;\ \textcolor{comment}{//\ in\ meters}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structgps__odometer__tools_1_1position_g_p_s}{positionGPS}}\ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structgps__odometer__tools_1_1position_g_p_s_a6d87586906aa6e7035538b805dc89a09}{latitude}};\ }
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structgps__odometer__tools_1_1position_g_p_s_aaad41b7d65946bd38c9e735f5c283251}{longitude}};\ }
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structgps__odometer__tools_1_1position_g_p_s_a2ac2b8b0d4a53170ffeeb7971caa99e4}{altitude}};\ }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ ros::Time\ \mbox{\hyperlink{structgps__odometer__tools_1_1position_g_p_s_aab3c60b69db63cbe3e4642de598dadc9}{time}};\ }
+\DoxyCodeLine{00033\ \ \ \ \ \};}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structgps__odometer__tools_1_1position}{position}}\ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structgps__odometer__tools_1_1position_aadb9921b43d3712bfb585b72e113556f}{x}};\ }
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structgps__odometer__tools_1_1position_a6344b0e9ebbb12b5960b5e54eec279e2}{y}};\ }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structgps__odometer__tools_1_1position_a2a0e606116933cf9071d4029d653c949}{z}};\ }
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ ros::Time\ \mbox{\hyperlink{structgps__odometer__tools_1_1position_a8f055d1900e5eb295effcd51dac3745f}{time}};\ }
+\DoxyCodeLine{00045\ \ \ \ \ \};}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00054\ \ \ \ \ \mbox{\hyperlink{structgps__odometer__tools_1_1position}{position}}\ gpsToEcef(\mbox{\hyperlink{structgps__odometer__tools_1_1position_g_p_s}{positionGPS}}\ gps);}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00064\ \ \ \ \ \mbox{\hyperlink{structgps__odometer__tools_1_1position}{position}}\ ecefToEnu(\mbox{\hyperlink{structgps__odometer__tools_1_1position}{position}}\ ecef,\ \mbox{\hyperlink{structgps__odometer__tools_1_1position_g_p_s}{positionGPS}}\ gps,\ \mbox{\hyperlink{structgps__odometer__tools_1_1position_g_p_s}{positionGPS}}\ reference\_gps);}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{double}\ getSampleTime(\mbox{\hyperlink{structgps__odometer__tools_1_1position}{position}}\ enu,\ \mbox{\hyperlink{structgps__odometer__tools_1_1position}{position}}\&\ old\_enu);}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00084\ \ \ \ \ geometry\_msgs::Quaternion\ eulerToQuaternion(\textcolor{keywordtype}{double}\ roll,\ \textcolor{keywordtype}{double}\ pitch,\ \textcolor{keywordtype}{double}\ yaw);}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,54 @@
+\doxysection{odometry\+\_\+tools.\+hpp}
+\hypertarget{odometry__tools_8hpp_source}{}\label{odometry__tools_8hpp_source}\index{include/first\_project/odometry\_tools.hpp@{include/first\_project/odometry\_tools.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}ros/ros.h"{}}\ \textcolor{comment}{//\ Include\ le\ API\ di\ ROS}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}geometry\_msgs/PointStamped.h"{}}\ \textcolor{comment}{//\ Definisce\ il\ tipo\ di\ messaggio\ che\ il\ nodo\ riceve}}
+\DoxyCodeLine{00005\ \textcolor{comment}{/*\ geometry\_msgs/PointStamped:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ \ \ y\ =\ speed\ [km/h]}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ \ \ \ x\ =\ steer\ at\ the\ steering\ wheel\ [deg]}}
+\DoxyCodeLine{00008\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}nav\_msgs/Odometry.h"{}}\ \textcolor{comment}{//\ Definisce\ il\ tipo\ di\ messaggio\ che\ il\ nodo\ invia}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <cmath>}\ \textcolor{comment}{//\ Per\ le\ funzioni\ matematiche}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <tf2/LinearMath/Quaternion.h>}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }odometer\_tools\ \{}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ WHEEL\_BASELINE\ =\ 1.30;\ \textcolor{comment}{//\ m}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ FRONT\_TO\_REAR\_AXIS\ =\ 1.765;\ \textcolor{comment}{//\ m}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ STEERING\_FACTOR\ =\ 32;}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structodometer__tools_1_1position_state}{positionState}}\ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structodometer__tools_1_1position_state_a425b4de207084cd515231b6ef3f0cbe8}{x}};\ }
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structodometer__tools_1_1position_state_a8db89103a421f763229aa1773eafd159}{y}};\ }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structodometer__tools_1_1position_state_abd4d40538d0f820352368ed1b8dcb0c8}{theta}};\ }
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ ros::Time\ \mbox{\hyperlink{structodometer__tools_1_1position_state_af0183366e676288b258201873e9a3d37}{time}};\ }
+\DoxyCodeLine{00042\ \ \ \ \ \};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{double}\ speedConvert(\textcolor{keywordtype}{double}\ speed);}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{double}\ steerConvert(\textcolor{keywordtype}{double}\ steer);}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{double}\ degToRad(\textcolor{keywordtype}{double}\ deg);}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{double}\ getAngularSpeed(\textcolor{keywordtype}{double}\ steering\_angle,\ \textcolor{keywordtype}{double}\ speed);}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{double}\ timeSample(\mbox{\hyperlink{structodometer__tools_1_1position_state}{positionState}}\&\ state,\ ros::Time\ current\_time);}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00098\ \ \ \ \ \mbox{\hyperlink{structodometer__tools_1_1position_state}{positionState}}\ eulerIntegration(\mbox{\hyperlink{structodometer__tools_1_1position_state}{positionState}}\ state,\ \textcolor{keywordtype}{double}\ speed,\ \textcolor{keywordtype}{double}\ angular\_speed,\ ros::Time\ current\_time);}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00109\ \ \ \ \ \mbox{\hyperlink{structodometer__tools_1_1position_state}{positionState}}\ rungeKuttaIntegration(\mbox{\hyperlink{structodometer__tools_1_1position_state}{positionState}}\ state,\ \textcolor{keywordtype}{double}\ speed,\ \textcolor{keywordtype}{double}\ angular\_speed,\ ros::Time\ current\_time);}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00121\ \ \ \ \ geometry\_msgs::Quaternion\ quaternionConversion(\mbox{\hyperlink{structodometer__tools_1_1position_state}{positionState}}\ state);}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \}}
+
+\end{DoxyCode}
