@@ -53,7 +53,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate messages in the 'msg' folder
  add_message_files(
  FILES
-  sector_times.msg
+  Sector_times.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -71,7 +71,7 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
- generate_messages(
+generate_messages(
    DEPENDENCIES
    std_msgs
 )
@@ -151,7 +151,8 @@ target_link_libraries(gps_odometer gps_odometer_tools odometry_tools ${catkin_LI
 
 add_executable(sector_times src/sector_times.cpp)
 target_link_libraries(sector_times sector_tools gps_odometer_tools odometry_tools ${catkin_LIBRARIES})
-add_dependencies(sector_times sector_times_generate_messages_cpp)
+add_dependencies(sector_times ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
