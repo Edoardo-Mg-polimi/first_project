@@ -14,8 +14,16 @@
 #include "first_project/gps_odometer_tools.hpp"
 #include "first_project/sector_tools.hpp" 
 
+//SETTORI
 int current_sector = 1; // variabile globale per il settore corrente
 int last_sector = 0; // variabile globale per il settore precedente
+
+//TEMPI
+float start_sector_time = 0; // tempo di inizio del settore
+float last_time = 0; // tempo di sample precedente
+
+//VELOCITÁ
+float 
 
 void callback(const geometry_msgs::PointStampedConstPtr& msg1, 
                 const sensor_msgs::NavSatFixConstPtr& msg2,
@@ -42,11 +50,17 @@ void callback(const geometry_msgs::PointStampedConstPtr& msg1,
     ROS_INFO_STREAM("Settore: " << current_sector);
 
     // 3 - Calcolo del tempo di percorrenza del settore
+    if (sector_tools::sectorChanged(current_sector, last_sector)){ //quando cambio settore
+        start_sector_time = current_time.toSec();
+        ROS_INFO_STREAM("Inizio settore " << current_sector << " al tempo: " << start_sector_time); 
+        
+        
+    }
 
-    float sector_time = 0;
+    float sector_time = current_time.toSec() - start_sector_time;
 
-    // 4 - Velocità media del setore
-    float mean_speed = 0;
+    // 4 - Velocità media del settore
+    
 
     // 5 - Creazione del messaggio
 

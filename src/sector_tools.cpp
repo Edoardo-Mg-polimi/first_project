@@ -27,6 +27,11 @@ namespace sector_tools{
         Eigen::Vector2d P = {enu.x, enu.y};
 
         switch (last_sector){
+        
+        case 0:{ // sono appena partito
+            return 1;
+        }
+
         case 1:{
             // 2 - Trasformo le coordinate dei 2 punti del border 1-2 in ENU
             border border_1_2 = gpsBorderToEnu(SECTOR_1_2, reference_gps);

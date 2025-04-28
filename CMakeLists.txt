@@ -14,6 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   tf
   message_filters
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -50,11 +51,10 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
+ add_message_files(
+ FILES
+  sector_times.msg
+)
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -71,10 +71,10 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs
-# )
+ generate_messages(
+   DEPENDENCIES
+   std_msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -108,7 +108,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES first_project
-  CATKIN_DEPENDS roscpp rospy std_msgs geometry_msgs tf message_filters
+  CATKIN_DEPENDS roscpp rospy std_msgs geometry_msgs tf message_filters message_runtime
 )
 
 ###########
@@ -151,6 +151,7 @@ target_link_libraries(gps_odometer gps_odometer_tools odometry_tools ${catkin_LI
 
 add_executable(sector_times src/sector_times.cpp)
 target_link_libraries(sector_times sector_tools gps_odometer_tools odometry_tools ${catkin_LIBRARIES})
+add_dependencies(sector_times sector_times_generate_messages_cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
