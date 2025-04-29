@@ -21,6 +21,7 @@ int current_sector = 1; // variabile globale per il settore corrente
 int last_sector = 0; // variabile globale per il settore precedente
 
 //TEMPI
+double sector_time = 0; // tempo di percorrenza del settore
 double start_sector_time = 0; // tempo di inizio del settore
 double last_time = 0; // tempo di sample precedente
 
@@ -53,35 +54,42 @@ void callback(const geometry_msgs::PointStampedConstPtr& msg1,
     current_sector = sector_tools::getSector(gps, reference_position, current_sector);
     ROS_INFO_STREAM("Settore: " << current_sector);
 
-    // 3 - Calcolo del tempo di percorrenza del settore
-    if (sector_tools::sectorChanged(current_sector, last_sector)){ //quando cambio settore
+
+    if (sector_tools::sectorChanged(current_sector, last_sector)){ //CAMBIO SETTORE
+        //3.A - Calcolo del tempo di percorrenza del settore
         start_sector_time = current_time.toSec();//resetto il tempo di inizio del settore
+        sector_time = 0; // resetto il tempo di percorrenza del settore
         ROS_INFO_STREAM("Inizio settore " << current_sector << " al tempo: " << start_sector_time); 
         ROS_INFO_STREAM("Resetto velocità media e cronometro");
-        
+
+        // 4.A - Calcolo velocità media del settore
         summed_weighted_speed = 0; // resetto la somma delle velocità
         last_time = current_time.toSec();
-
         mean_speed = current_speed;
     }
+    else{//Se NON è cambiato settore
+        //3.B - Calcolo del tempo di percorrenza del settore
+        sector_time = current_time.toSec() - start_sector_time;
+        if (sector_time < 0) {
+            ROS_WARN_STREAM("Tempo di settore non valido: " << sector_time);
+            return;
+        }
 
-    double sector_time = current_time.toSec() - start_sector_time;
-    if (sector_time < 0) {
-        ROS_WARN_STREAM("Tempo di settore non valido: " << sector_time);
-        return;
+        // 4.B - Calcolo velocità media del settore
+        double dt = current_time.toSec() - last_time; //calcolo il tempo di campionamento
+        if (dt <= 0) {
+            ROS_WARN_STREAM("Tempo di campionamento non valido: " << dt);
+            
+        }
+        last_time = current_time.toSec();
+
+        summed_weighted_speed += current_speed * dt;// somma delle velocità pesate
+        mean_speed = summed_weighted_speed / sector_time;
     }
+
     ROS_INFO_STREAM("Cronometro: " << sector_time);
 
-    // 4 - Velocità media del settore
-    double dt = current_time.toSec() - last_time; //calcolo il tempo di campionamento
-    if (dt <= 0) {
-        ROS_WARN_STREAM("Tempo di campionamento non valido: " << dt);
-        return;
-    }
-    last_time = current_time.toSec();
-
-    summed_weighted_speed += current_speed * dt;// somma delle velocità pesate
-    mean_speed = summed_weighted_speed / sector_time;
+    ROS_INFO_STREAM("Velocità media: " << mean_speed << " km/h");
     
     // 5 - Creazione del messaggio
     first_project::Sector_times msg_out;
