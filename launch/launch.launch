@@ -19,5 +19,5 @@
 
   <!-- Avvia la bag -->
   <node pkg="rosbag" type="play" name="bag_player" output="screen"
-        args="$(find first_project)/bags/project.bag --clock --loop" />
+        args="$(find first_project)/bags/project.bag --clock " />
 </launch>
