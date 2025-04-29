@@ -39,12 +39,6 @@ namespace sector_tools{
             // 3 - Calcola da quale lato si trova il punto point rispetto al border
             double orientation = (border_1_2.B - border_1_2.A).x() * (P - border_1_2.A).y() -
                                  (border_1_2.B - border_1_2.A).y() * (P - border_1_2.A).x();
-
-            ROS_INFO_STREAM("P: " << P.transpose());
-            ROS_INFO_STREAM("A: " << border_1_2.A.transpose());
-            ROS_INFO_STREAM("B: " << border_1_2.B.transpose());
-            ROS_INFO_STREAM("Orientation: " << orientation);
-                                 
             
             if (orientation >= 0)
                 return 1;
@@ -61,11 +55,6 @@ namespace sector_tools{
             // 3 - Calcola da quale lato si trova il punto point rispetto al border
             double orientation = (border_2_3.B - border_2_3.A).x() * (P - border_2_3.A).y() -
                                  (border_2_3.B - border_2_3.A).y() * (P - border_2_3.A).x();
-
-            ROS_INFO_STREAM("P: " << P.transpose());
-            ROS_INFO_STREAM("A: " << border_2_3.A.transpose());
-            ROS_INFO_STREAM("B: " << border_2_3.B.transpose());
-            ROS_INFO_STREAM("Orientation: " << orientation);
             
             if (orientation >= 0)
                 return 2;
@@ -82,12 +71,6 @@ namespace sector_tools{
             // 3 - Calcola da quale lato si trova il punto point rispetto al border
             double orientation = (border_3_1.B - border_3_1.A).x() * (P - border_3_1.A).y() -
                                  (border_3_1.B - border_3_1.A).y() * (P - border_3_1.A).x();
-
-            ROS_INFO_STREAM("P: " << P.transpose());
-            ROS_INFO_STREAM("A: " << border_3_1.A.transpose());
-            ROS_INFO_STREAM("B: " << border_3_1.B.transpose());
-            ROS_INFO_STREAM("Orientation: " << orientation);
-
             
             if (orientation >= 0)
                 return 3;

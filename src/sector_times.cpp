@@ -66,10 +66,18 @@ void callback(const geometry_msgs::PointStampedConstPtr& msg1,
     }
 
     double sector_time = current_time.toSec() - start_sector_time;
+    if (sector_time < 0) {
+        ROS_WARN_STREAM("Tempo di settore non valido: " << sector_time);
+        return;
+    }
     ROS_INFO_STREAM("Cronometro: " << sector_time);
 
     // 4 - Velocità media del settore
     double dt = current_time.toSec() - last_time; //calcolo il tempo di campionamento
+    if (dt <= 0) {
+        ROS_WARN_STREAM("Tempo di campionamento non valido: " << dt);
+        return;
+    }
     last_time = current_time.toSec();
 
     summed_weighted_speed += current_speed * dt;// somma delle velocità pesate
