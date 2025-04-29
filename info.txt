@@ -1,0 +1,4 @@
+CODICE PERSONA; NAME; SURNAME
+
+10730038; Edoardo; Menegotto
+
