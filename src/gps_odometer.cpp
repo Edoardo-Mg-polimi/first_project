@@ -11,6 +11,7 @@
 
 gps_odometer_tools::position old_enu = {0, 0, 0}; // inizializzazione della posizione ENU
 
+double last_yaw = 0.0; // inizializzazione dell'orientamento
 
 void speedSteerCallback(const sensor_msgs::NavSatFix::ConstPtr& msg, 
 						ros::Publisher& gps_odom_pub, 
@@ -40,9 +41,21 @@ void speedSteerCallback(const sensor_msgs::NavSatFix::ConstPtr& msg,
 
 	// 4 - Calcolo dell'orientazione
 	gps_odometer_tools::position direction = {enu.x - old_enu.x, enu.y - old_enu.y, enu.z - old_enu.z};
-	double yaw = atan2(direction.y, direction.x);//Rotazione atorno all'asse Z
+	double yaw = 0.0;
 	double pitch = 0.0; //0 perchè sono a 2D
 	double roll = 0.0; // 0 perchè non ho i dati per calcolarlo
+	
+	// Ignora rotazioni se il movimento è troppo piccolo (rumore GPS)
+	double distance = sqrt(direction.x * direction.x + direction.y * direction.y);
+	
+	if (distance > gps_odometer_tools::EPSILON) {
+		yaw = atan2(direction.y, direction.x);//Rotazione atorno all'asse Z
+		last_yaw = yaw;
+	}
+	else{
+		yaw = last_yaw;
+	}
+
 
 	// 5 - Conversione in quaternione
 	geometry_msgs::Quaternion quaternion = gps_odometer_tools::eulerToQuaternion(roll, pitch, yaw);

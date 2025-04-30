@@ -19,7 +19,12 @@ namespace gps_odometer_tools {
      */
     constexpr double POLAR_RADIUS = 6356752; // in meters
 
-
+    /**
+     * @brief Soglia di sensibilità per calcolo orientazione
+     * 
+     */
+    constexpr double EPSILON = 0.5;
+    
     /**
      * @brief Struttura che rappresenta una posizione GPS.
      * 
