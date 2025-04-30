@@ -1,4 +1,6 @@
 CODICE PERSONA; NAME; SURNAME
 
 10730038; Edoardo; Menegotto
+10797648; Lorenzo; Parodi
+10773952; Agata; Pulvi
 

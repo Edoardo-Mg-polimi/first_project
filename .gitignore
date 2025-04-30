@@ -1,6 +1,0 @@
-# Ignora tutti i file .bag
-*.bag
-
-# Ignora la cartella bags/
-bags/
-

@@ -1,122 +1,118 @@
 #pragma once
 
-#include "ros/ros.h" // Include le API di ROS
-#include "geometry_msgs/PointStamped.h" // Definisce il tipo di messaggio che il nodo riceve
+#include "ros/ros.h" // Includes ROS APIs
+#include "geometry_msgs/PointStamped.h" // Defines the type of message received by the node
 /* geometry_msgs/PointStamped:
     y = speed [km/h]
     x = steer at the steering wheel [deg]
 */
-#include "nav_msgs/Odometry.h" // Definisce il tipo di messaggio che il nodo invia
-#include <cmath> // Per le funzioni matematiche
+#include "nav_msgs/Odometry.h" // Defines the type of message sent by the node
+#include <cmath> // For mathematical functions
 #include <tf2/LinearMath/Quaternion.h>
 
 namespace odometer_tools {
 
     /**
-     * @brief Distanza tra le ruote (asse anteriore e posteriore) in metri.
+     * @brief Distance between the wheels (front and rear axle) in meters.
      */
     constexpr int WHEEL_BASELINE = 1.30; // m
 
     /**
-     * @brief Distanza tra l'asse anteriore e quello posteriore in metri.
+     * @brief Distance between the front and rear axles in meters.
      */
     constexpr float FRONT_TO_REAR_AXIS = 1.765; // m
 
     /**
-     * @brief Fattore di conversione per l'angolo di sterzata.
+     * @brief Conversion factor for the steering angle.
      */
     constexpr int STEERING_FACTOR = 32;
 
-
     /**
-     * @brief Struttura che rappresenta lo stato della posizione.
+     * @brief Structure representing the position state.
      * 
-     * Contiene le coordinate cartesiane (x, y), l'angolo di orientamento (theta)
-     * e il timestamp ROS.
+     * Contains Cartesian coordinates (x, y), orientation angle (theta),
+     * and the ROS timestamp.
      */
     struct positionState {
-        double x; ///< Coordinata x in metri.
-        double y; ///< Coordinata y in metri.
-        double theta; ///< Angolo di orientamento in radianti.
-        ros::Time time; ///< Timestamp ROS.
+        double x; ///< x coordinate in meters.
+        double y; ///< y coordinate in meters.
+        double theta; ///< Orientation angle in radians.
+        ros::Time time; ///< ROS timestamp.
     };
 
-
     /**
-     * @brief Converte la velocità da km/h a m/s.
+     * @brief Converts speed from km/h to m/s.
      * 
-     * @param speed Velocità in km/h.
-     * @return double Velocità in m/s.
+     * @param speed Speed in km/h.
+     * @return double Speed in m/s.
      */
     double speedConvert(double speed);
 
     /**
-     * @brief Converte l'angolo di sterzata dal volante in radianti.
+     * @brief Converts the steering angle from the steering wheel to radians.
      * 
-     * @param steer Angolo di sterzata in gradi.
-     * @return double Angolo di sterzata in radianti.
+     * @param steer Steering angle in degrees.
+     * @return double Steering angle in radians.
      */
     double steerConvert(double steer);
 
     /**
-     * @brief Converte un angolo da gradi a radianti.
+     * @brief Converts an angle from degrees to radians.
      * 
-     * @param deg Angolo in gradi.
-     * @return double Angolo in radianti.
+     * @param deg Angle in degrees.
+     * @return double Angle in radians.
      */
     double degToRad(double deg);
 
     /**
-     * @brief Calcola la velocità angolare utilizzando l'approssimazione del modello Ackermann.
+     * @brief Calculates the angular speed using the Ackermann model approximation.
      * 
-     * @param steering_angle Angolo di sterzata in radianti.
-     * @param speed Velocità in m/s.
-     * @return double Velocità angolare in radianti al secondo.
+     * @param steering_angle Steering angle in radians.
+     * @param speed Speed in m/s.
+     * @return double Angular speed in radians per second.
      */
     double getAngularSpeed(double steering_angle, double speed);
 
-
     /**
-     * @brief Calcola il campionamento temporale tra due timestamp.
+     * @brief Calculates the time sample between two timestamps.
      * 
-     * @param state Stato della posizione precedente.
-     * @param current_time Timestamp corrente.
-     * @return double Campionamento temporale in secondi.
+     * @param state Previous position state.
+     * @param current_time Current timestamp.
+     * @return double Time sample in seconds.
      */
     double timeSample(positionState& state, ros::Time current_time);
 
-
     /**
-     * @brief Esegue l'integrazione di Eulero per aggiornare lo stato della posizione.
+     * @brief Performs Euler integration to update the position state.
      * 
-     * @param state Stato della posizione corrente.
-     * @param speed Velocità in m/s.
-     * @param angular_speed Velocità angolare in radianti al secondo.
-     * @param current_time Timestamp corrente.
-     * @return positionState Stato della posizione aggiornato.
+     * @param state Current position state.
+     * @param speed Speed in m/s.
+     * @param angular_speed Angular speed in radians per second.
+     * @param current_time Current timestamp.
+     * @return positionState Updated position state.
      */
     positionState eulerIntegration(positionState state, double speed, double angular_speed, ros::Time current_time);
 
     /**
-     * @brief Esegue l'integrazione di Runge-Kutta per aggiornare lo stato della posizione.
+     * @brief Performs Runge-Kutta integration to update the position state.
      * 
-     * @param state Stato della posizione corrente.
-     * @param speed Velocità in m/s.
-     * @param angular_speed Velocità angolare in radianti al secondo.
-     * @param current_time Timestamp corrente.
-     * @return positionState Stato della posizione aggiornato.
+     * @param state Current position state.
+     * @param speed Speed in m/s.
+     * @param angular_speed Angular speed in radians per second.
+     * @param current_time Current timestamp.
+     * @return positionState Updated position state.
      */
     positionState rungeKuttaIntegration(positionState state, double speed, double angular_speed, ros::Time current_time);
 
     /**
-     * @brief Converte lo stato della posizione in un quaternion ROS.
+     * @brief Converts the position state to a ROS quaternion.
      * 
-     * Questa funzione prende uno stato di posizione rappresentato da coordinate
-     * cartesiane (x, y) e un angolo di orientamento (theta) e lo converte in un
-     * messaggio `geometry_msgs::Quaternion` utilizzato in ROS.
+     * This function takes a position state represented by Cartesian coordinates
+     * (x, y) and an orientation angle (theta) and converts it into a
+     * `geometry_msgs::Quaternion` message used in ROS.
      * 
-     * @param state Lo stato della posizione, contenente x, y, theta e il timestamp.
-     * @return geometry_msgs::Quaternion Il quaternion corrispondente all'orientamento.
+     * @param state The position state, containing x, y, theta, and the timestamp.
+     * @return geometry_msgs::Quaternion The quaternion corresponding to the orientation.
      */
     geometry_msgs::Quaternion quaternionConversion(positionState state);
 

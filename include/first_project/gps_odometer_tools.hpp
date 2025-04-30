@@ -1,90 +1,87 @@
 #pragma once
 #include <cmath>
-#include <Eigen/Geometry> // Per Quaterniond e AngleAxisd
-#include "ros/ros.h" // Include le API di ROS
-#include "sensor_msgs/NavSatFix.h" // Messaggio che il nodo riceve
-#include "nav_msgs/Odometry.h" // Definisce il tipo di messaggio che il nodo invia
+#include <Eigen/Geometry> // For Quaterniond and AngleAxisd
+#include "ros/ros.h" // Includes ROS APIs
+#include "sensor_msgs/NavSatFix.h" // Message received by the node
+#include "nav_msgs/Odometry.h" // Defines the type of message sent by the node
 
 #include "first_project/odometry_tools.hpp"
 
 namespace gps_odometer_tools {
 
     /**
-     * @brief Raggio equatoriale della Terra in metri.
+     * @brief Earth's equatorial radius in meters.
      */
     constexpr double EQUATORIAL_RADIUS = 6378137.0; // in meters
 
     /**
-     * @brief Raggio polare della Terra in metri.
+     * @brief Earth's polar radius in meters.
      */
     constexpr double POLAR_RADIUS = 6356752; // in meters
 
     /**
-     * @brief Soglia di sensibilità per calcolo orientazione
-     * 
+     * @brief Sensitivity threshold for orientation calculation.
      */
     constexpr double EPSILON = 0.5;
     
     /**
-     * @brief Struttura che rappresenta una posizione GPS.
+     * @brief Structure representing a GPS position.
      * 
-     * Contiene latitudine, longitudine, altitudine e un timestamp ROS.
+     * Contains latitude, longitude, altitude, and a ROS timestamp.
      */
     struct positionGPS {
-        double latitude; ///< Latitudine in gradi.
-        double longitude; ///< Longitudine in gradi.
-        double altitude; ///< Altitudine in metri.
-        ros::Time time; ///< Timestamp ROS.
+        double latitude; ///< Latitude in degrees.
+        double longitude; ///< Longitude in degrees.
+        double altitude; ///< Altitude in meters.
+        ros::Time time; ///< ROS timestamp.
     };
 
     /**
-     * @brief Struttura che rappresenta una posizione cartesiana.
+     * @brief Structure representing a Cartesian position.
      * 
-     * Contiene le coordinate x, y, z e un timestamp ROS.
+     * Contains x, y, z coordinates and a ROS timestamp.
      */
     struct position {
-        double x; ///< Coordinata x in metri.
-        double y; ///< Coordinata y in metri.
-        double z; ///< Coordinata z in metri.
-        ros::Time time; ///< Timestamp ROS.
+        double x; ///< x coordinate in meters.
+        double y; ///< y coordinate in meters.
+        double z; ///< z coordinate in meters.
+        ros::Time time; ///< ROS timestamp.
     };
 
-
     /**
-     * @brief Converte una posizione GPS in coordinate ECEF (Earth-Centered, Earth-Fixed).
+     * @brief Converts a GPS position to ECEF (Earth-Centered, Earth-Fixed) coordinates.
      * 
-     * @param gps La posizione GPS  in GRADI da convertire.
-     * @return position La posizione in coordinate ECEF.
+     * @param gps The GPS position in DEGREES to convert.
+     * @return position The position in ECEF coordinates.
      */
     position gpsToEcef(positionGPS gps);
 
     /**
-     * @brief Converte coordinate ECEF in coordinate ENU (East-North-Up).
+     * @brief Converts ECEF coordinates to ENU (East-North-Up) coordinates.
      * 
-     * @param ecef La posizione in coordinate ECEF.
-     * @param gps La posizione GPS corrente.
-     * @param reference_gps La posizione GPS di riferimento.
-     * @return position La posizione in coordinate ENU.
+     * @param ecef The position in ECEF coordinates.
+     * @param gps The current GPS position.
+     * @param reference_gps The reference GPS position.
+     * @return position The position in ENU coordinates.
      */
     position ecefToEnu(position ecef, positionGPS gps, positionGPS reference_gps);
 
-
     /**
-     * @brief Calcola il tempo di campionamento tra due posizioni ENU.
+     * @brief Calculates the sampling time between two ENU positions.
      * 
-     * @param enu La posizione ENU corrente.
-     * @param old_enu La posizione ENU precedente.
-     * @return double Il tempo di campionamento in secondi.
+     * @param enu The current ENU position.
+     * @param old_enu The previous ENU position.
+     * @return double The sampling time in seconds.
      */
     double getSampleTime(position enu, position& old_enu);
 
     /**
-     * @brief Converte angoli di Eulero (roll, pitch, yaw) in un quaternion ROS.
+     * @brief Converts Euler angles (roll, pitch, yaw) to a ROS quaternion.
      * 
-     * @param roll Angolo di rollio in radianti.
-     * @param pitch Angolo di beccheggio in radianti.
-     * @param yaw Angolo di imbardata in radianti.
-     * @return geometry_msgs::Quaternion Il quaternion corrispondente.
+     * @param roll Roll angle in radians.
+     * @param pitch Pitch angle in radians.
+     * @param yaw Yaw angle in radians.
+     * @return geometry_msgs::Quaternion The corresponding quaternion.
      */
     geometry_msgs::Quaternion eulerToQuaternion(double roll, double pitch, double yaw);
 

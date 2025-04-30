@@ -3,9 +3,9 @@
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
-\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}ros/ros.h"{}}\ \textcolor{comment}{//\ Include\ le\ API\ di\ ROS}}
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <Eigen/Geometry>}\ \textcolor{comment}{//\ Per\ Quaterniond\ e\ AngleAxisd}}
-\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}sensor\_msgs/NavSatFix.h"{}}\ \textcolor{comment}{//\ Messaggio\ che\ il\ nodo\ riceve}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}ros/ros.h"{}}\ \textcolor{comment}{//\ Includes\ ROS\ APIs}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <Eigen/Geometry>}\ \textcolor{comment}{//\ For\ Quaterniond\ and\ AngleAxisd}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}sensor\_msgs/NavSatFix.h"{}}\ \textcolor{comment}{//\ Message\ received\ by\ the\ node}}
 \DoxyCodeLine{00005\ }
 \DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}first\_project/gps\_odometer\_tools.hpp"{}}}
 \DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}first\_project/odometry\_tools.hpp"{}}}
@@ -17,22 +17,21 @@
 \DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ Eigen::Vector2d\ \mbox{\hyperlink{structsector__tools_1_1border_aaa1f2da52d2a7171f6e53a53e95f663a}{B}};\ }
 \DoxyCodeLine{00019\ \ \ \ \ \}\ \mbox{\hyperlink{structsector__tools_1_1border}{border}};}
 \DoxyCodeLine{00020\ }
-\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{comment}{//\ Constants}}
 \DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structsector__tools_1_1border}{border}}\ SECTOR\_1\_2\ =\ \{\{45.63005992259639,\ 9.289493322674346\},\ \{45.63014854640358,\ 9.289485276047794\}\};}
 \DoxyCodeLine{00026\ }
 \DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structsector__tools_1_1border}{border}}\ SECTOR\_2\_3\ =\ \{\{45.62360610880583,\ 9.287260626835694\},\ \{45.62353576425271,\ 9.287329693713597\}\};}
 \DoxyCodeLine{00031\ }
 \DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structsector__tools_1_1border}{border}}\ SECTOR\_3\_1\ =\ \{\{45.616046529711056,\ 9.280680036793406\},\ \{45.61603152085702,\ 9.280910706754558\}\};}
 \DoxyCodeLine{00036\ }
-\DoxyCodeLine{00037\ }
-\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ TOLLERANCE\ =\ 5;}
-\DoxyCodeLine{00042\ }
-\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{int}\ getSector(gps\_odometer\_tools::positionGPS\ gps,\ gps\_odometer\_tools::positionGPS\ reference\_gps,\ \textcolor{keywordtype}{int}\ last\_sector);}
-\DoxyCodeLine{00052\ }
-\DoxyCodeLine{00060\ \ \ \ \ \mbox{\hyperlink{structsector__tools_1_1border}{border}}\ gpsBorderToEnu(\mbox{\hyperlink{structsector__tools_1_1border}{border}}\ gps\_boundary,\ gps\_odometer\_tools::positionGPS\ reference\_gps);}
-\DoxyCodeLine{00061\ }
-\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{bool}\ sectorChanged(\textcolor{keywordtype}{int}\ new\_sector,\ \textcolor{keywordtype}{int}\&\ last\_sector);}
-\DoxyCodeLine{00070\ }
-\DoxyCodeLine{00071\ \}}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ TOLLERANCE\ =\ 5;}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{int}\ getSector(gps\_odometer\_tools::positionGPS\ gps,\ gps\_odometer\_tools::positionGPS\ reference\_gps,\ \textcolor{keywordtype}{int}\ last\_sector);}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00059\ \ \ \ \ \mbox{\hyperlink{structsector__tools_1_1border}{border}}\ gpsBorderToEnu(\mbox{\hyperlink{structsector__tools_1_1border}{border}}\ gps\_boundary,\ gps\_odometer\_tools::positionGPS\ reference\_gps);}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{bool}\ sectorChanged(\textcolor{keywordtype}{int}\ new\_sector,\ \textcolor{keywordtype}{int}\&\ last\_sector);}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \}}
 
 \end{DoxyCode}

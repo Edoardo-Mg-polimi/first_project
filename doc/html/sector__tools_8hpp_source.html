@@ -106,9 +106,9 @@ $(function(){initNavTree('sector__tools_8hpp_source.html',''); initResizable(tru
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;ros/ros.h&quot;</span> <span class="comment">// Include le API di ROS</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;Eigen/Geometry&gt;</span> <span class="comment">// Per Quaterniond e AngleAxisd</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;sensor_msgs/NavSatFix.h&quot;</span> <span class="comment">// Messaggio che il nodo riceve</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;ros/ros.h&quot;</span> <span class="comment">// Includes ROS APIs</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;Eigen/Geometry&gt;</span> <span class="comment">// For Quaterniond and AngleAxisd</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;sensor_msgs/NavSatFix.h&quot;</span> <span class="comment">// Message received by the node</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;first_project/gps_odometer_tools.hpp&quot;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;first_project/odometry_tools.hpp&quot;</span></div>
@@ -122,26 +122,25 @@ $(function(){initNavTree('sector__tools_8hpp_source.html',''); initResizable(tru
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    } <a class="code hl_struct" href="structsector__tools_1_1border.html">border</a>;</div>
 </div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="comment">// Constants</span></div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keyword">const</span> <a class="code hl_struct" href="structsector__tools_1_1border.html">border</a> SECTOR_1_2 = {{45.63005992259639, 9.289493322674346}, {45.63014854640358, 9.289485276047794}};</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span></div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keyword">const</span> <a class="code hl_struct" href="structsector__tools_1_1border.html">border</a> SECTOR_2_3 = {{45.62360610880583, 9.287260626835694}, {45.62353576425271, 9.287329693713597}};</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span></div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keyword">const</span> <a class="code hl_struct" href="structsector__tools_1_1border.html">border</a> SECTOR_3_1 = {{45.616046529711056, 9.280680036793406}, {45.61603152085702, 9.280910706754558}};</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span></div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keyword">constexpr</span> <span class="keywordtype">int</span> TOLLERANCE = 5;</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span></div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordtype">int</span> getSector(gps_odometer_tools::positionGPS gps, gps_odometer_tools::positionGPS reference_gps, <span class="keywordtype">int</span> last_sector);</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span></div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <a class="code hl_struct" href="structsector__tools_1_1border.html">border</a> gpsBorderToEnu(<a class="code hl_struct" href="structsector__tools_1_1border.html">border</a> gps_boundary, gps_odometer_tools::positionGPS reference_gps);</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span></div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <span class="keywordtype">bool</span> sectorChanged(<span class="keywordtype">int</span> new_sector, <span class="keywordtype">int</span>&amp; last_sector);</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>}</div>
-<div class="ttc" id="astructsector__tools_1_1border_html"><div class="ttname"><a href="structsector__tools_1_1border.html">sector_tools::border</a></div><div class="ttdoc">Struttura che rappresenta un confine tra due settori.</div><div class="ttdef"><b>Definition</b> sector_tools.hpp:16</div></div>
-<div class="ttc" id="astructsector__tools_1_1border_html_aaa1f2da52d2a7171f6e53a53e95f663a"><div class="ttname"><a href="structsector__tools_1_1border.html#aaa1f2da52d2a7171f6e53a53e95f663a">sector_tools::border::B</a></div><div class="ttdeci">Eigen::Vector2d B</div><div class="ttdoc">Punto B del confine.</div><div class="ttdef"><b>Definition</b> sector_tools.hpp:18</div></div>
-<div class="ttc" id="astructsector__tools_1_1border_html_aeaf70bfee53594877bbd1d907ec01222"><div class="ttname"><a href="structsector__tools_1_1border.html#aeaf70bfee53594877bbd1d907ec01222">sector_tools::border::A</a></div><div class="ttdeci">Eigen::Vector2d A</div><div class="ttdoc">Punto A del confine.</div><div class="ttdef"><b>Definition</b> sector_tools.hpp:17</div></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keyword">constexpr</span> <span class="keywordtype">int</span> TOLLERANCE = 5;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keywordtype">int</span> getSector(gps_odometer_tools::positionGPS gps, gps_odometer_tools::positionGPS reference_gps, <span class="keywordtype">int</span> last_sector);</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <a class="code hl_struct" href="structsector__tools_1_1border.html">border</a> gpsBorderToEnu(<a class="code hl_struct" href="structsector__tools_1_1border.html">border</a> gps_boundary, gps_odometer_tools::positionGPS reference_gps);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="keywordtype">bool</span> sectorChanged(<span class="keywordtype">int</span> new_sector, <span class="keywordtype">int</span>&amp; last_sector);</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>}</div>
+<div class="ttc" id="astructsector__tools_1_1border_html"><div class="ttname"><a href="structsector__tools_1_1border.html">sector_tools::border</a></div><div class="ttdoc">Structure representing a boundary between two sectors.</div><div class="ttdef"><b>Definition</b> sector_tools.hpp:16</div></div>
+<div class="ttc" id="astructsector__tools_1_1border_html_aaa1f2da52d2a7171f6e53a53e95f663a"><div class="ttname"><a href="structsector__tools_1_1border.html#aaa1f2da52d2a7171f6e53a53e95f663a">sector_tools::border::B</a></div><div class="ttdeci">Eigen::Vector2d B</div><div class="ttdoc">Point B of the boundary.</div><div class="ttdef"><b>Definition</b> sector_tools.hpp:18</div></div>
+<div class="ttc" id="astructsector__tools_1_1border_html_aeaf70bfee53594877bbd1d907ec01222"><div class="ttname"><a href="structsector__tools_1_1border.html#aeaf70bfee53594877bbd1d907ec01222">sector_tools::border::A</a></div><div class="ttdeci">Eigen::Vector2d A</div><div class="ttdoc">Point A of the boundary.</div><div class="ttdef"><b>Definition</b> sector_tools.hpp:17</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

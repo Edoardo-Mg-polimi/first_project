@@ -107,14 +107,14 @@ $(function(){initNavTree('odometry__tools_8hpp_source.html',''); initResizable(t
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;ros/ros.h&quot;</span> <span class="comment">// Include le API di ROS</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;geometry_msgs/PointStamped.h&quot;</span> <span class="comment">// Definisce il tipo di messaggio che il nodo riceve</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;ros/ros.h&quot;</span> <span class="comment">// Includes ROS APIs</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;geometry_msgs/PointStamped.h&quot;</span> <span class="comment">// Defines the type of message received by the node</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment">/* geometry_msgs/PointStamped:</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment">    y = speed [km/h]</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment">    x = steer at the steering wheel [deg]</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment">*/</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;nav_msgs/Odometry.h&quot;</span> <span class="comment">// Definisce il tipo di messaggio che il nodo invia</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;cmath&gt;</span> <span class="comment">// Per le funzioni matematiche</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;nav_msgs/Odometry.h&quot;</span> <span class="comment">// Defines the type of message sent by the node</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;cmath&gt;</span> <span class="comment">// For mathematical functions</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;tf2/LinearMath/Quaternion.h&gt;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">namespace </span>odometer_tools {</div>
@@ -124,42 +124,38 @@ $(function(){initNavTree('odometry__tools_8hpp_source.html',''); initResizable(t
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keyword">constexpr</span> <span class="keywordtype">float</span> FRONT_TO_REAR_AXIS = 1.765; <span class="comment">// m</span></div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keyword">constexpr</span> <span class="keywordtype">int</span> STEERING_FACTOR = 32;</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span></div>
-<div class="foldopen" id="foldopen00037" data-start="{" data-end="};">
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="structodometer__tools_1_1position_state.html">   37</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structodometer__tools_1_1position_state.html">positionState</a> {</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="structodometer__tools_1_1position_state.html#a425b4de207084cd515231b6ef3f0cbe8">   38</a></span>        <span class="keywordtype">double</span> <a class="code hl_variable" href="structodometer__tools_1_1position_state.html#a425b4de207084cd515231b6ef3f0cbe8">x</a>; </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="structodometer__tools_1_1position_state.html#a8db89103a421f763229aa1773eafd159">   39</a></span>        <span class="keywordtype">double</span> <a class="code hl_variable" href="structodometer__tools_1_1position_state.html#a8db89103a421f763229aa1773eafd159">y</a>; </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="structodometer__tools_1_1position_state.html#abd4d40538d0f820352368ed1b8dcb0c8">   40</a></span>        <span class="keywordtype">double</span> <a class="code hl_variable" href="structodometer__tools_1_1position_state.html#abd4d40538d0f820352368ed1b8dcb0c8">theta</a>; </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="structodometer__tools_1_1position_state.html#af0183366e676288b258201873e9a3d37">   41</a></span>        ros::Time <a class="code hl_variable" href="structodometer__tools_1_1position_state.html#af0183366e676288b258201873e9a3d37">time</a>; </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    };</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span></div>
+<div class="foldopen" id="foldopen00036" data-start="{" data-end="};">
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="structodometer__tools_1_1position_state.html">   36</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structodometer__tools_1_1position_state.html">positionState</a> {</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="structodometer__tools_1_1position_state.html#a425b4de207084cd515231b6ef3f0cbe8">   37</a></span>        <span class="keywordtype">double</span> <a class="code hl_variable" href="structodometer__tools_1_1position_state.html#a425b4de207084cd515231b6ef3f0cbe8">x</a>; </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="structodometer__tools_1_1position_state.html#a8db89103a421f763229aa1773eafd159">   38</a></span>        <span class="keywordtype">double</span> <a class="code hl_variable" href="structodometer__tools_1_1position_state.html#a8db89103a421f763229aa1773eafd159">y</a>; </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="structodometer__tools_1_1position_state.html#abd4d40538d0f820352368ed1b8dcb0c8">   39</a></span>        <span class="keywordtype">double</span> <a class="code hl_variable" href="structodometer__tools_1_1position_state.html#abd4d40538d0f820352368ed1b8dcb0c8">theta</a>; </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="structodometer__tools_1_1position_state.html#af0183366e676288b258201873e9a3d37">   40</a></span>        ros::Time <a class="code hl_variable" href="structodometer__tools_1_1position_state.html#af0183366e676288b258201873e9a3d37">time</a>; </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    };</div>
 </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span></div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordtype">double</span> speedConvert(<span class="keywordtype">double</span> speed);</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span></div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <span class="keywordtype">double</span> steerConvert(<span class="keywordtype">double</span> steer);</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keywordtype">double</span> degToRad(<span class="keywordtype">double</span> deg);</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span></div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <span class="keywordtype">double</span> getAngularSpeed(<span class="keywordtype">double</span> steering_angle, <span class="keywordtype">double</span> speed);</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span></div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <span class="keywordtype">double</span> timeSample(<a class="code hl_struct" href="structodometer__tools_1_1position_state.html">positionState</a>&amp; state, ros::Time current_time);</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span></div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <a class="code hl_struct" href="structodometer__tools_1_1position_state.html">positionState</a> eulerIntegration(<a class="code hl_struct" href="structodometer__tools_1_1position_state.html">positionState</a> state, <span class="keywordtype">double</span> speed, <span class="keywordtype">double</span> angular_speed, ros::Time current_time);</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span></div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    <a class="code hl_struct" href="structodometer__tools_1_1position_state.html">positionState</a> rungeKuttaIntegration(<a class="code hl_struct" href="structodometer__tools_1_1position_state.html">positionState</a> state, <span class="keywordtype">double</span> speed, <span class="keywordtype">double</span> angular_speed, ros::Time current_time);</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span></div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    geometry_msgs::Quaternion quaternionConversion(<a class="code hl_struct" href="structodometer__tools_1_1position_state.html">positionState</a> state);</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>}</div>
-<div class="ttc" id="astructodometer__tools_1_1position_state_html"><div class="ttname"><a href="structodometer__tools_1_1position_state.html">odometer_tools::positionState</a></div><div class="ttdoc">Struttura che rappresenta lo stato della posizione.</div><div class="ttdef"><b>Definition</b> odometry_tools.hpp:37</div></div>
-<div class="ttc" id="astructodometer__tools_1_1position_state_html_a425b4de207084cd515231b6ef3f0cbe8"><div class="ttname"><a href="structodometer__tools_1_1position_state.html#a425b4de207084cd515231b6ef3f0cbe8">odometer_tools::positionState::x</a></div><div class="ttdeci">double x</div><div class="ttdoc">Coordinata x in metri.</div><div class="ttdef"><b>Definition</b> odometry_tools.hpp:38</div></div>
-<div class="ttc" id="astructodometer__tools_1_1position_state_html_a8db89103a421f763229aa1773eafd159"><div class="ttname"><a href="structodometer__tools_1_1position_state.html#a8db89103a421f763229aa1773eafd159">odometer_tools::positionState::y</a></div><div class="ttdeci">double y</div><div class="ttdoc">Coordinata y in metri.</div><div class="ttdef"><b>Definition</b> odometry_tools.hpp:39</div></div>
-<div class="ttc" id="astructodometer__tools_1_1position_state_html_abd4d40538d0f820352368ed1b8dcb0c8"><div class="ttname"><a href="structodometer__tools_1_1position_state.html#abd4d40538d0f820352368ed1b8dcb0c8">odometer_tools::positionState::theta</a></div><div class="ttdeci">double theta</div><div class="ttdoc">Angolo di orientamento in radianti.</div><div class="ttdef"><b>Definition</b> odometry_tools.hpp:40</div></div>
-<div class="ttc" id="astructodometer__tools_1_1position_state_html_af0183366e676288b258201873e9a3d37"><div class="ttname"><a href="structodometer__tools_1_1position_state.html#af0183366e676288b258201873e9a3d37">odometer_tools::positionState::time</a></div><div class="ttdeci">ros::Time time</div><div class="ttdoc">Timestamp ROS.</div><div class="ttdef"><b>Definition</b> odometry_tools.hpp:41</div></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordtype">double</span> speedConvert(<span class="keywordtype">double</span> speed);</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keywordtype">double</span> steerConvert(<span class="keywordtype">double</span> steer);</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="keywordtype">double</span> degToRad(<span class="keywordtype">double</span> deg);</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    <span class="keywordtype">double</span> getAngularSpeed(<span class="keywordtype">double</span> steering_angle, <span class="keywordtype">double</span> speed);</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    <span class="keywordtype">double</span> timeSample(<a class="code hl_struct" href="structodometer__tools_1_1position_state.html">positionState</a>&amp; state, ros::Time current_time);</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    <a class="code hl_struct" href="structodometer__tools_1_1position_state.html">positionState</a> eulerIntegration(<a class="code hl_struct" href="structodometer__tools_1_1position_state.html">positionState</a> state, <span class="keywordtype">double</span> speed, <span class="keywordtype">double</span> angular_speed, ros::Time current_time);</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    <a class="code hl_struct" href="structodometer__tools_1_1position_state.html">positionState</a> rungeKuttaIntegration(<a class="code hl_struct" href="structodometer__tools_1_1position_state.html">positionState</a> state, <span class="keywordtype">double</span> speed, <span class="keywordtype">double</span> angular_speed, ros::Time current_time);</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    geometry_msgs::Quaternion quaternionConversion(<a class="code hl_struct" href="structodometer__tools_1_1position_state.html">positionState</a> state);</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>}</div>
+<div class="ttc" id="astructodometer__tools_1_1position_state_html"><div class="ttname"><a href="structodometer__tools_1_1position_state.html">odometer_tools::positionState</a></div><div class="ttdoc">Structure representing the position state.</div><div class="ttdef"><b>Definition</b> odometry_tools.hpp:36</div></div>
+<div class="ttc" id="astructodometer__tools_1_1position_state_html_a425b4de207084cd515231b6ef3f0cbe8"><div class="ttname"><a href="structodometer__tools_1_1position_state.html#a425b4de207084cd515231b6ef3f0cbe8">odometer_tools::positionState::x</a></div><div class="ttdeci">double x</div><div class="ttdoc">x coordinate in meters.</div><div class="ttdef"><b>Definition</b> odometry_tools.hpp:37</div></div>
+<div class="ttc" id="astructodometer__tools_1_1position_state_html_a8db89103a421f763229aa1773eafd159"><div class="ttname"><a href="structodometer__tools_1_1position_state.html#a8db89103a421f763229aa1773eafd159">odometer_tools::positionState::y</a></div><div class="ttdeci">double y</div><div class="ttdoc">y coordinate in meters.</div><div class="ttdef"><b>Definition</b> odometry_tools.hpp:38</div></div>
+<div class="ttc" id="astructodometer__tools_1_1position_state_html_abd4d40538d0f820352368ed1b8dcb0c8"><div class="ttname"><a href="structodometer__tools_1_1position_state.html#abd4d40538d0f820352368ed1b8dcb0c8">odometer_tools::positionState::theta</a></div><div class="ttdeci">double theta</div><div class="ttdoc">Orientation angle in radians.</div><div class="ttdef"><b>Definition</b> odometry_tools.hpp:39</div></div>
+<div class="ttc" id="astructodometer__tools_1_1position_state_html_af0183366e676288b258201873e9a3d37"><div class="ttname"><a href="structodometer__tools_1_1position_state.html#af0183366e676288b258201873e9a3d37">odometer_tools::positionState::time</a></div><div class="ttdeci">ros::Time time</div><div class="ttdoc">ROS timestamp.</div><div class="ttdef"><b>Definition</b> odometry_tools.hpp:40</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
