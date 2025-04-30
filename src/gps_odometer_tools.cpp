@@ -20,14 +20,14 @@ namespace gps_odometer_tools{
         return ecef;
     }
 
-    position ecefToEnu(position ecef, positionGPS gps, positionGPS reference_gps){
-        //Confertire la reference in GPS in radianti
-        reference_gps = {odometer_tools::degToRad(reference_gps.latitude), 
-                        odometer_tools::degToRad(reference_gps.longitude), 
-                        reference_gps.altitude};
-        
+    position ecefToEnu(position ecef, positionGPS gps, positionGPS reference_gps){  
         //Convertire la reference in ECEF
         position reference_pos = gpsToEcef(reference_gps);
+
+        //Convertire la latitudine e longitudine in radianti
+        reference_gps.latitude = odometer_tools::degToRad(reference_gps.latitude);
+        reference_gps.longitude = odometer_tools::degToRad(reference_gps.longitude);
+
 
         position enu;
         enu.x = -sin(reference_gps.longitude) * (ecef.x - reference_pos.x) + cos(reference_gps.longitude) * (ecef.y - reference_pos.y);
@@ -50,10 +50,10 @@ namespace gps_odometer_tools{
     }
     
     geometry_msgs::Quaternion eulerToQuaternion(double roll, double pitch, double yaw){
-        Eigen::AngleAxisd yawAngle(yaw,   Eigen::Vector3d::UnitY());
-        Eigen::AngleAxisd pitchAngle(pitch, Eigen::Vector3d::UnitX());
-        Eigen::AngleAxisd rollAngle(roll,  Eigen::Vector3d::UnitZ());
-
+        Eigen::AngleAxisd rollAngle(roll,   Eigen::Vector3d::UnitX());
+        Eigen::AngleAxisd pitchAngle(pitch, Eigen::Vector3d::UnitY());
+        Eigen::AngleAxisd yawAngle(yaw,     Eigen::Vector3d::UnitZ());
+        
         Eigen::Quaterniond q = yawAngle * pitchAngle * rollAngle;
 
         geometry_msgs::Quaternion q_msg;

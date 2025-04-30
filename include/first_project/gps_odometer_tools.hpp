@@ -48,7 +48,7 @@ namespace gps_odometer_tools {
     /**
      * @brief Converte una posizione GPS in coordinate ECEF (Earth-Centered, Earth-Fixed).
      * 
-     * @param gps La posizione GPS da convertire.
+     * @param gps La posizione GPS  in GRADI da convertire.
      * @return position La posizione in coordinate ECEF.
      */
     position gpsToEcef(positionGPS gps);

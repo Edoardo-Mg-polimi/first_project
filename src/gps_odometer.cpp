@@ -22,7 +22,7 @@ void speedSteerCallback(const sensor_msgs::NavSatFix::ConstPtr& msg,
 	}
 	
     
-	// 1 - raccolta dati 
+	// 1 - raccolta dati punto GPS
 	gps_odometer_tools::positionGPS gps{ msg->latitude,
 										 msg->longitude,
 										 msg->altitude,
@@ -40,9 +40,9 @@ void speedSteerCallback(const sensor_msgs::NavSatFix::ConstPtr& msg,
 
 	// 4 - Calcolo dell'orientazione
 	gps_odometer_tools::position direction = {enu.x - old_enu.x, enu.y - old_enu.y, enu.z - old_enu.z};
-	double yaw = atan2(direction.z, direction.x);
-    double pitch = atan2(direction.y, sqrt(direction.x * direction.x + direction.z * direction.z));
-	double roll = 0.0; // opzionale
+	double yaw = atan2(direction.y, direction.x);//Rotazione atorno all'asse Z
+	double pitch = 0.0; //0 perchè sono a 2D
+	double roll = 0.0; // 0 perchè non ho i dati per calcolarlo
 
 	// 5 - Conversione in quaternione
 	geometry_msgs::Quaternion quaternion = gps_odometer_tools::eulerToQuaternion(roll, pitch, yaw);
