@@ -11,7 +11,6 @@
 
 gps_odometer_tools::position old_enu = {0, 0, 0}; // inizializzazione della posizione ENU
 
-double last_yaw = 0.0; // inizializzazione dell'orientamento
 
 void speedSteerCallback(const sensor_msgs::NavSatFix::ConstPtr& msg, 
 						ros::Publisher& gps_odom_pub, 
@@ -28,6 +27,7 @@ void speedSteerCallback(const sensor_msgs::NavSatFix::ConstPtr& msg,
 										 msg->longitude,
 										 msg->altitude,
 										 msg->header.stamp};
+	ros::Time current_time = msg->header.stamp;
 	ROS_INFO_STREAM("Messaggio GPS ricevuto");
 
 	// 2 - Conversione da posizione GPS (latitudine, longitudine, altitudine) -> cartesiano ECEF
@@ -41,21 +41,9 @@ void speedSteerCallback(const sensor_msgs::NavSatFix::ConstPtr& msg,
 
 	// 4 - Calcolo dell'orientazione
 	gps_odometer_tools::position direction = {enu.x - old_enu.x, enu.y - old_enu.y, enu.z - old_enu.z};
-	double yaw = 0.0;
+	double yaw = atan2(direction.y, direction.x);//Rotazione atorno all'asse Z
 	double pitch = 0.0; //0 perchè sono a 2D
 	double roll = 0.0; // 0 perchè non ho i dati per calcolarlo
-	
-	// Ignora rotazioni se il movimento è troppo piccolo (rumore GPS)
-	double distance = sqrt(direction.x * direction.x + direction.y * direction.y);
-	
-	if (distance > gps_odometer_tools::EPSILON) {
-		yaw = atan2(direction.y, direction.x);//Rotazione atorno all'asse Z
-		last_yaw = yaw;
-	}
-	else{
-		yaw = last_yaw;
-	}
-
 
 	// 5 - Conversione in quaternione
 	geometry_msgs::Quaternion quaternion = gps_odometer_tools::eulerToQuaternion(roll, pitch, yaw);
@@ -75,8 +63,8 @@ void speedSteerCallback(const sensor_msgs::NavSatFix::ConstPtr& msg,
 	// 7 - creazione del messaggio Odometry
 	nav_msgs::Odometry odom_msg;
 	odom_msg.header.stamp = gps.time;
-	odom_msg.header.frame_id = "gps_odom";
-	odom_msg.child_frame_id = "base_link";
+	odom_msg.header.frame_id = "odom";
+	odom_msg.child_frame_id = "gps_odom";
 	//posizione in Sistema di riferimento del mondo "odom"
 	odom_msg.pose.pose.position.x = enu.x;
 	odom_msg.pose.pose.position.y = enu.y;
@@ -102,7 +90,7 @@ void speedSteerCallback(const sensor_msgs::NavSatFix::ConstPtr& msg,
 	q.setW(quaternion.w);
 	transform.setRotation(q);
 
-	br.sendTransform(tf::StampedTransform(transform, gps.time, "gps_odom", "base_link"));
+	br.sendTransform(tf::StampedTransform(transform, current_time, "odom", "gps_odom" ));
 
 }
 

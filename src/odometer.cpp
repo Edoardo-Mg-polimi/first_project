@@ -22,10 +22,16 @@ void speedSteerCallback(const geometry_msgs::PointStamped::ConstPtr& msg, ros::P
 	double steer_wheel = msg->point.x;// angolo volante in gradi
 	double speed = msg->point.y;// velocità in km/h
 
+	if(steer_wheel<10 && steer_wheel>-10){
+		steer_wheel=0;
+	}
+
 	//2 - conversione unità di misura
 	double steering_angle = odometer_tools::steerConvert(steer_wheel);// angolo volante in gradi
+
 	steering_angle = odometer_tools::degToRad(steering_angle);// angolo volante in radianti
 	speed = odometer_tools::speedConvert(speed);// velocità in m/s
+
 
 	//3 - Ackermann steering bicyle approximation
 	double angular_speed = odometer_tools::getAngularSpeed(steering_angle, speed);// velocità angolare in rad/s
