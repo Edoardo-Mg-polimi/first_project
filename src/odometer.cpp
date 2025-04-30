@@ -48,8 +48,8 @@ void speedSteerCallback(const geometry_msgs::PointStamped::ConstPtr& msg, ros::P
 	odom_msg.header.frame_id = "odom";
 	odom_msg.child_frame_id = "base_link";
 	//posizione in Sistema di riferimento del mondo "odom"
-	odom_msg.pose.pose.position.x = state.x;
-	odom_msg.pose.pose.position.y = state.y;
+	odom_msg.pose.pose.position.x = -state.y;
+	odom_msg.pose.pose.position.y = state.x;
 	odom_msg.pose.pose.position.z = 0.0;
 	odom_msg.pose.pose.orientation = orientation;
 	//velocità in Sistema di riferimento del robot "baes_link"
@@ -66,7 +66,7 @@ void speedSteerCallback(const geometry_msgs::PointStamped::ConstPtr& msg, ros::P
 	//8 - pubblicazione tf
 	static tf::TransformBroadcaster odom_broadcaster;
 	tf::Transform odom_trans;
-	odom_trans.setOrigin(tf::Vector3(state.x, state.y, 0.0));
+	odom_trans.setOrigin(tf::Vector3(-state.y, state.x, 0.0));
 	tf::Quaternion quat;
 	tf::quaternionMsgToTF(orientation, quat);
 	odom_trans.setRotation(quat);
