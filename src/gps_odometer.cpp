@@ -102,7 +102,7 @@ void speedSteerCallback(const sensor_msgs::NavSatFix::ConstPtr& msg,
 	q.setW(quaternion.w);
 	transform.setRotation(q);
 
-	br.sendTransform(tf::StampedTransform(transform, gps.time, "odom", "gps_odom"));
+	br.sendTransform(tf::StampedTransform(transform, gps.time, "gps_odom", "base_link"));
 
 }
 
